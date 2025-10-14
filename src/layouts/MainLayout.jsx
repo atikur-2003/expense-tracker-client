@@ -5,14 +5,13 @@ import HeroImage from "../components/HeroImage";
 
 const MainLayout = () => {
   return (
-    <div className="">
+    <div>
       <div>
         <Navbar />
       </div>
-      <div className="flex flex-col-reverse md:flex-row justify-between px-4 md:px-10 lg:px-20">
+      <div className="flex flex-col-reverse lg:flex-row justify-between py-10 lg:py-30 px-4 md:px-10 lg:px-20 bg-violet-50">
         <Outlet />
-      
-        <HeroImage/>
+        <HeroImage />
       </div>
     </div>
   );

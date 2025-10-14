@@ -3,7 +3,8 @@ import React from 'react';
 const HeroContent = () => {
     return (
         <div>
-            hero content
+            <h1>Welcome to Expense Tracker</h1>
+            <p></p>
         </div>
     );
 };
