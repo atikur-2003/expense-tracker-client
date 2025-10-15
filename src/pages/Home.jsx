@@ -1,14 +1,14 @@
 import React from "react";
-import Login from "./authPages/Login";
-import Signup from "./authPages/Signup";
-import HeroContent from "../components/HeroContent";
+import HeroSection from "../components/HeroSection";
+import FeaturesSection from "../components/FeatureSection";
+import HowItWorksSection from "../components/HowItWorksSection";
 
 const Home = () => {
   return (
     <div>
-      {/* <Login />
-      <Signup /> */}
-      <HeroContent/>
+      <HeroSection />
+      <FeaturesSection />
+      <HowItWorksSection />
     </div>
   );
 };
