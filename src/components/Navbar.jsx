@@ -2,7 +2,7 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <div className="navbar  px-5 md:px-10 lg:px-20 shadow-sm">
+    <div className="navbar px-5 md:px-10 lg:px-20 shadow-sm">
       <div className="navbar-start">
         <a className="text-xl text-purple-500 font-bold">Expense Tracker</a>
       </div>
