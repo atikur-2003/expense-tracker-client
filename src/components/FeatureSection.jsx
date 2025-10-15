@@ -3,9 +3,9 @@ import { FaUsers, FaWallet, FaChartPie } from "react-icons/fa";
 const FeaturesSection = () => {
   return (
     <section className="py-16 bg-white text-gray-800">
-      <div className="max-w-6xl mx-auto px-6 text-center">
+      <div className="max-w-6xl mx-auto px-6 md:px-10 lg:px-20 text-center">
         {/* Small label */}
-        <span className="text-lg bg-violet-50 px-3 py-1 rounded-full font-medium text-purple-500 mb-4">Our Features</span>
+        <span className="text-base bg-violet-50 px-3 py-1 rounded-full font-semibold text-purple-500 mb-4">Our Features</span>
 
         {/* Heading */}
         <h2 className="text-2xl lg:text-3xl font-bold mb-4">
