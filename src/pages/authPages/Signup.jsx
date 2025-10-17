@@ -131,7 +131,6 @@ const Signup = () => {
               </button>
             </div>
             <div>
-              <a className="link link-hover text-sm">Forgot password?</a>
             </div>
             {errorMessage && (
               <p className="text-red-400 text-base">{errorMessage}</p>

@@ -1,26 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import useAuth from "../hooks/useAuth";
 import { motion, AnimatePresence } from "framer-motion";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
-  const { user } = useAuth();
+  const { user, logOut } = useAuth();
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  // Close dropdown when clicking outside
-  // useEffect(() => {
-  //   const closeDropdown = (e) => {
-  //     if (!e.target.closest(".dropdown-container")) {
-  //       setDropdownOpen(false);
-  //     }
-  //   };
-  //   document.addEventListener("click", closeDropdown);
-  //   return () => document.removeEventListener("click", closeDropdown);
-  // }, []);
+const handleLogout = () => {
+    logOut()
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "You Logged Out successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/login");
+      })
+      .catch((error) => {
+        Swal.fire(error);
+      });
+  };
 
   return (
-    <div className="navbar px-5 md:px-10 lg:px-20 shadow-sm">
+    <div className="navbar fixed top-0 w-full z-50 bg-base-200 px-5 md:px-10 lg:px-20 shadow-sm">
       <div className="navbar-start">
         <Link to="/">
           <p className="text-xl text-purple-500 font-bold">Expense Tracker</p>
@@ -64,8 +71,8 @@ const Navbar = () => {
                     Dashboard
                   </Link>
                   <button
-                    // onClick={handleLogout}
-                    className="block w-full text-left px-4 py-2 hover:bg-purple-50 text-gray-700"
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 hover:bg-purple-50 text-gray-700 cursor-pointer hover:rounded-lg"
                   >
                     Logout
                   </button>

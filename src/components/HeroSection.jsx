@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 const HeroSection = () => {
   return (
-    <div className="flex flex-col-reverse md:flex-row  justify-between gap-7 px-5 md:px-10 lg:px-20 py-10 md:py-16 lg:py-20">
+    <div className="flex flex-col-reverse md:flex-row  justify-between gap-7 px-5 md:px-10 lg:px-20 py-10 md:pb-16 pt-36 lg:pb-28">
       <div>
         <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
           Welcome to <br />{" "}
