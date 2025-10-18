@@ -1,12 +1,18 @@
 import React from "react";
-import { NavLink } from "react-router";
-import { FaHome, FaPlusCircle, FaChartPie, FaUser } from "react-icons/fa";
+import { Link, NavLink } from "react-router";
+import { FaHome, FaChartPie, FaUser } from "react-icons/fa";
+import { FaWallet } from "react-icons/fa6";
+import { RiHandCoinFill } from "react-icons/ri";
 
 const Sidebar = () => {
   return (
     <div className="fixed left-0 top-0 w-64 h-full bg-white shadow-lg border-r border-gray-200">
       <div className="p-5 border-b border-gray-200">
-        <h1 className="text-2xl font-bold text-purple-600">Expense Tracker</h1>
+        <Link to="/">
+          <h1 className="text-2xl font-bold text-purple-600">
+            Expense Tracker
+          </h1>
+        </Link>
       </div>
 
       <nav className="flex flex-col gap-2 p-4">
@@ -24,7 +30,7 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink
-          to="/dashboard/add-expense"
+          to="/dashboard/income"
           className={({ isActive }) =>
             `flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 ${
               isActive
@@ -33,11 +39,10 @@ const Sidebar = () => {
             }`
           }
         >
-          <FaPlusCircle /> Add Expense
+          <FaWallet /> Income
         </NavLink>
-
         <NavLink
-          to="/dashboard/reports"
+          to="/dashboard/expense"
           className={({ isActive }) =>
             `flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 ${
               isActive
@@ -46,21 +51,8 @@ const Sidebar = () => {
             }`
           }
         >
-          <FaChartPie /> Reports
-        </NavLink>
-
-        <NavLink
-          to="/dashboard/profile"
-          className={({ isActive }) =>
-            `flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 ${
-              isActive
-                ? "bg-purple-500 text-white"
-                : "text-gray-700 hover:bg-purple-100"
-            }`
-          }
-        >
-          <FaUser /> Profile
-        </NavLink>
+          <RiHandCoinFill /> Expense
+        </NavLink>        
       </nav>
     </div>
   );

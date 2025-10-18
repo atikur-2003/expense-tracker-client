@@ -5,6 +5,8 @@ import Login from "../pages/authPages/Login";
 import Signup from "../pages/authPages/Signup";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Overview from "../pages/dashboardPages/Overview";
+import Income from "../pages/dashboardPages/Income";
+import Expense from "../pages/dashboardPages/Expense";
 
 export const router = createBrowserRouter([
     {
@@ -32,6 +34,14 @@ export const router = createBrowserRouter([
             {
                 path:'overview',
                 Component: Overview
+            },
+            {
+                path : 'income',
+                Component: Income
+            },
+            {
+                path : 'expense',
+                Component: Expense
             }
         ]
     }
