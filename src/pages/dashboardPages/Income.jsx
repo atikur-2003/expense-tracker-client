@@ -6,11 +6,9 @@ const AddIncome = () => {
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
   const [incomeData, setIncomeData] = useState({
-    title: "",
+    source: "",
     amount: "",
-    category: "",
-    date: "",
-    description: "",
+    date: ""
   });
 
   const handleChange = (e) => {
@@ -22,7 +20,7 @@ const AddIncome = () => {
     e.preventDefault();
 
     // Simple validation
-    if (!incomeData.title || !incomeData.amount || !incomeData.category || !incomeData.date) {
+    if (!incomeData.source || !incomeData.amount || !incomeData.date) {
       Swal.fire("Error!", "Please fill all required fields.", "error");
       return;
     }
@@ -40,11 +38,9 @@ const AddIncome = () => {
       if (res.data.insertedId) {
         Swal.fire("Success!", "Income added successfully!", "success");
         setIncomeData({
-          title: "",
+          source: "",
           amount: "",
-          category: "",
-          date: "",
-          description: "",
+          date: ""
         });
       } else {
         Swal.fire("Error!", "Something went wrong. Try again.", "error");
@@ -58,7 +54,7 @@ const AddIncome = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-base-200 px-4 py-10">
+    <div className="flex justify-center items-center min-h-screen bg-base-200 px-4 py-8">
       <div className="w-full max-w-lg bg-white rounded-2xl shadow-lg p-8">
         <h2 className="text-2xl font-semibold text-center text-purple-600 mb-6">
           Add Income
@@ -68,11 +64,11 @@ const AddIncome = () => {
           {/* Title */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">
-              Title <span className="text-red-500">*</span>
+              Income Source <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              name="title"
+              name="source"
               value={incomeData.title}
               onChange={handleChange}
               placeholder="e.g. Freelance Project Payment"
@@ -95,26 +91,6 @@ const AddIncome = () => {
             />
           </div>
 
-          {/* Category */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">
-              Category <span className="text-red-500">*</span>
-            </label>
-            <select
-              name="category"
-              value={incomeData.category}
-              onChange={handleChange}
-              className="select select-bordered w-full focus:outline-none focus:border-purple-500"
-            >
-              <option value="">Select Category</option>
-              <option value="Salary">Salary</option>
-              <option value="Freelance">Freelance</option>
-              <option value="Investment">Investment</option>
-              <option value="Business">Business</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
           {/* Date */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">
@@ -127,19 +103,6 @@ const AddIncome = () => {
               onChange={handleChange}
               className="input input-bordered w-full focus:outline-none focus:border-purple-500"
             />
-          </div>
-
-          {/* Description */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Description</label>
-            <textarea
-              name="description"
-              value={incomeData.description}
-              onChange={handleChange}
-              rows="3"
-              placeholder="Optional details..."
-              className="textarea textarea-bordered w-full focus:outline-none focus:border-purple-500"
-            ></textarea>
           </div>
 
           {/* Submit */}

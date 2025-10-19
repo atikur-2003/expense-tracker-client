@@ -15,7 +15,7 @@ const DashboardLayout = () => {
       <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar} />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col lg:ml-60">
         {/* Navbar (visible on small screens) */}
         <DashboardNavbar toggleSidebar={toggleSidebar} isOpen={isSidebarOpen} />
 
