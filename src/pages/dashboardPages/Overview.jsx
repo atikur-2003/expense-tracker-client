@@ -40,7 +40,7 @@ const Overview = () => {
   ];
 
   return (
-    <div className="p-3 md:p-8 lg:p-0 space-y-8">
+    <div className="p-3 md:p-5 lg:p-0 space-y-8">
       {/* --- Top Cards --- */}
       <div className="mb-10">
         <h1 className="text-2xl font-semibold mb-4 text-gray-800">
@@ -53,7 +53,7 @@ const Overview = () => {
         <div className="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between border-l-4 border-purple-500 transition-transform hover:scale-105">
           <div>
             <h2 className="text-gray-500 font-medium">Total Balance</h2>
-            <p className="text-3xl font-bold text-gray-800">
+            <p className="text-2xl font-bold text-gray-800">
               ${totals.balance.toFixed(2)}
             </p>
           </div>
@@ -64,7 +64,7 @@ const Overview = () => {
         <div className="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between border-l-4 border-green-500 transition-transform hover:scale-105">
           <div>
             <h2 className="text-gray-500 font-medium">Total Income</h2>
-            <p className="text-3xl font-bold text-gray-800">
+            <p className="text-2xl font-bold text-gray-800">
               ${totals.income.toFixed(2)}
             </p>
           </div>
@@ -75,7 +75,7 @@ const Overview = () => {
         <div className="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between border-l-4 border-red-500 transition-transform hover:scale-105">
           <div>
             <h2 className="text-gray-500 font-medium">Total Expense</h2>
-            <p className="text-3xl font-bold text-gray-800">
+            <p className="text-2xl font-bold text-gray-800">
               ${totals.expense.toFixed(2)}
             </p>
           </div>
@@ -103,15 +103,15 @@ const Overview = () => {
                     <p className="font-medium text-gray-800">{tx.source}</p>
                     <p className="text-sm text-gray-500">{tx.date}</p>
                   </div>
-                  <span
+                  {/* <span
                     className={`font-semibold ${
                       tx.type === "income"
                         ? "text-green-600"
                         : "text-red-500"
                     }`}
-                  >
-                    {tx.type === "income" ? "+" : "-"}${tx.amount.toFixed(2)}
-                  </span>
+                  > */}
+                    <p>{tx.amount}</p>
+                  {/* </span> */}
                 </li>
               ))
             )}
