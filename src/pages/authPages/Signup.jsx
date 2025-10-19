@@ -45,7 +45,7 @@ const Signup = () => {
               showConfirmButton: false,
               timer: 1500,
             });
-            navigate("/");
+            navigate("/dashboard");
           })
           .catch((error) => {
             Swal.fire({

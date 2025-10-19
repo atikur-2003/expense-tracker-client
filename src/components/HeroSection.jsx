@@ -1,8 +1,10 @@
 import React from "react";
 import heroImg from "../assets/hero-image.avif";
 import { Link } from "react-router";
+import useAuth from "../hooks/useAuth";
 
 const HeroSection = () => {
+  const { user } = useAuth();
   return (
     <div className="flex flex-col-reverse md:flex-row  justify-between gap-7 px-5 md:px-10 lg:px-20 py-10 md:pb-16 pt-36 lg:pb-28">
       <div>
@@ -14,11 +16,13 @@ const HeroSection = () => {
           The modern expense management system that helps you to manage your all
           income and expenses in one place in a organize way
         </p>
-        <Link to='/login'>
-        <button className="px-4 py-1.5 rounded-xl text-purple-500 border border-purple-500 font-semibold hover:bg-purple-500 hover:text-white transition-all duration-300 cursor-pointer">
-          Get Started
-        </button>
-        </Link>
+        {!user && (
+          <Link to="/login">
+            <button className="px-4 py-1.5 rounded-xl text-purple-500 border border-purple-500 font-semibold hover:bg-purple-500 hover:text-white transition-all duration-300 cursor-pointer">
+              Get Started
+            </button>
+          </Link>
+        )}
       </div>
       <div>
         <img src={heroImg} alt="" className=" md:w-85 lg:w-110 rounded-lg" />
