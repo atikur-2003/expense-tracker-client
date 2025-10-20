@@ -103,15 +103,8 @@ const Overview = () => {
                     <p className="font-medium text-gray-800">{tx.source}</p>
                     <p className="text-sm text-gray-500">{tx.date}</p>
                   </div>
-                  {/* <span
-                    className={`font-semibold ${
-                      tx.type === "income"
-                        ? "text-green-600"
-                        : "text-red-500"
-                    }`}
-                  > */}
+                  
                     <p>{tx.amount}</p>
-                  {/* </span> */}
                 </li>
               ))
             )}

@@ -38,7 +38,7 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
         <h2 className="text-xl font-semibold text-gray-800 mb-4">Add New Income</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-600 text-sm mb-1">Source</label>
+            <label className="block text-gray-600 text-sm mb-1">Income Source</label>
             <input
               type="text"
               name="source"
@@ -73,7 +73,7 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition"
+            className="w-full border border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white py-2 rounded-lg cursor-pointer transition duration-300"
           >
             {loading ? "Adding..." : "Add Income"}
           </button>

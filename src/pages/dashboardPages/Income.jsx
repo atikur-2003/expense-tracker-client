@@ -19,9 +19,9 @@ const Income= () => {
   }, [axiosSecure]);
 
   return (
-    <div className="p-4 md:p-8 space-y-6">
+    <div className=" space-y-6">
       {/* Bar Chart */}
-      <div className="bg-white rounded-2xl shadow-md p-4 md:p-6">
+      <div className="bg-white rounded-2xl shadow-md md:p-6">
         <h2 className="text-lg font-semibold mb-4 text-gray-800">Income Overview</h2>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
@@ -42,7 +42,7 @@ const Income= () => {
           <h2 className="text-lg font-semibold text-gray-800">All Incomes</h2>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition"
+            className="flex items-center gap-2 border border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white px-4 py-2 cursor-pointer rounded-lg transition"
           >
             <FaPlus /> Add Income
           </button>
