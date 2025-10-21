@@ -17,7 +17,13 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
     try {
       const res = await axiosSecure.post("/incomes", formData);
       setIncomes((prev) => [...prev, res.data]);
-      Swal.fire("income added")
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Income added successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       setIsModalOpen(false);
     } catch (err) {
       console.error(err);
@@ -35,27 +41,37 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
         >
           ✕
         </button>
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Add New Income</h2>
+        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+          Add New Income
+        </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-600 text-sm mb-1">Income Source</label>
+            <label className="block text-gray-600 text-sm mb-1">
+              Income Source
+            </label>
             <input
               type="text"
               name="source"
               required
               value={formData.source}
-              onChange={(e) => setFormData({ ...formData, source: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, source: e.target.value })
+              }
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
           <div>
-            <label className="block text-gray-600 text-sm mb-1">Amount ($)</label>
+            <label className="block text-gray-600 text-sm mb-1">
+              Amount ($)
+            </label>
             <input
               type="number"
               name="amount"
               required
               value={formData.amount}
-              onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, amount: e.target.value })
+              }
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
@@ -66,7 +82,9 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
               name="date"
               required
               value={formData.date}
-              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, date: e.target.value })
+              }
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>

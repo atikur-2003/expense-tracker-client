@@ -9,25 +9,25 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import AddExpenseModal from "./AddExpenseModal";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 
 const Expense = () => {
   const [expenses, setExpenses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const axiosSecure = useAxiosSecure();
 
-  // Fetch or mock data
+  // Fetch incomes from API
   useEffect(() => {
-    const mockExpenses = [
-      { id: 1, category: "Food", amount: 120, date: "2025-10-15" },
-      { id: 2, category: "Transport", amount: 60, date: "2025-10-16" },
-      { id: 3, category: "Bills", amount: 90, date: "2025-10-17" },
-      { id: 4, category: "Shopping", amount: 150, date: "2025-10-18" },
-    ];
-    setExpenses(mockExpenses);
-  }, []);
+    const fetchExpenses = async () => {
+      const res = await axiosSecure.get("/expenses");
+      setExpenses(res.data);
+    };
+    fetchExpenses();
+  }, [axiosSecure]);
 
   const chartData = expenses.map((exp) => ({
-    name: exp.category,
+    name: exp.source,
     amount: exp.amount,
   }));
 
@@ -64,7 +64,7 @@ const Expense = () => {
           <h3 className="text-lg font-semibold">All Expenses</h3>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition"
+            className="border border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white px-4 py-2 rounded-lg font-medium cursor-pointer transition duration-300"
           >
             + Add Expense
           </button>
@@ -79,10 +79,10 @@ const Expense = () => {
                 className="flex justify-between items-center bg-gray-50 dark:bg-gray-700 px-4 py-3 rounded-lg"
               >
                 <div>
-                  <p className="font-medium">{exp.category}</p>
+                  <p className="font-medium">{exp.source}</p>
                   <p className="text-sm text-gray-500">{exp.date}</p>
                 </div>
-                <p className="text-red-500 font-semibold">${exp.amount.toFixed(2)}</p>
+                <p className="text-red-500 font-semibold">{exp.amount}</p>
               </div>
             ))
           ) : (
