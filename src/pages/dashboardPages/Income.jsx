@@ -51,10 +51,14 @@ const Income= () => {
         {incomes.length === 0 ? (
           <p className="text-gray-500 text-center py-6">No incomes added yet.</p>
         ) : (
-          <ul className="divide-y">
+          <ul className="">
             {incomes.map((income) => (
+
               <li key={income._id} className="py-3 flex justify-between text-gray-700">
+                <div>
+                  <span>{income.icon}</span>
                 <span>{income.source}</span>
+                </div>
                 <span className="font-semibold">${income.amount}</span>
               </li>
             ))}

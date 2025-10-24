@@ -1,16 +1,27 @@
 import { useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import EmojiPicker from "emoji-picker-react";
 
 const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
   const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
+  const [showPicker, setShowPicker] = useState(false);
+  const [selectedEmoji, setSelectedEmoji] = useState("");
+
   const [formData, setFormData] = useState({
-    type:'income',
+    icon: "",
+    type: "income",
     source: "",
     amount: "",
     date: "",
   });
+
+  const handleEmojiClick = (emojiData) => {
+    setSelectedEmoji(emojiData.emoji);
+    setFormData((prev) => ({ ...prev, icon: emojiData.emoji })); // ✅ update icon
+    setShowPicker(false);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,9 +53,37 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
         >
           ✕
         </button>
+
         <h2 className="text-xl font-semibold text-gray-800 mb-4">
           Add New Income
         </h2>
+
+        {/* Emoji Picker Section */}
+        <div className="mb-4 relative">
+          <label className="block text-sm font-medium text-gray-600 mb-1">
+            Choose Icon
+          </label>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              className="text-3xl bg-gray-100 p-2 rounded-lg hover:scale-110 transition"
+              onClick={() => setShowPicker(!showPicker)}
+            >
+              {selectedEmoji || "😊"}
+            </button>
+            {showPicker && (
+              <div className="absolute z-50 mt-2">
+                <EmojiPicker
+                  onEmojiClick={handleEmojiClick}
+                  theme="light"
+                  height={400}
+                  width={300}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-gray-600 text-sm mb-1">
@@ -61,6 +100,7 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
+
           <div>
             <label className="block text-gray-600 text-sm mb-1">
               Amount ($)
@@ -76,6 +116,7 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
+
           <div>
             <label className="block text-gray-600 text-sm mb-1">Date</label>
             <input
@@ -89,6 +130,7 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
+
           <button
             type="submit"
             disabled={loading}
