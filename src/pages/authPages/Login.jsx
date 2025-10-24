@@ -32,7 +32,7 @@ const Login = () => {
           timer: 1500,
         });
 
-        navigate('/dashboard');
+        navigate('/dashboard/overview');
       })
       .catch((error) => {
         const errorCode = error.code;

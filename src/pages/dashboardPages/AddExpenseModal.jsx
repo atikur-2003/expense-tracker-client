@@ -6,6 +6,7 @@ const AddExpenseModal = ({ closeModal, onAddExpense }) => {
   const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
   const [formData, setFormData] = useState({
+    type:'expense',
     source: "",
     amount: "",
     date: "",

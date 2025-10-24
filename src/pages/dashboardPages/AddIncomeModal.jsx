@@ -6,6 +6,7 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
   const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
   const [formData, setFormData] = useState({
+    type:'income',
     source: "",
     amount: "",
     date: "",

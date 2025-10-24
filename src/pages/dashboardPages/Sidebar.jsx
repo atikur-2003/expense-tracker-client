@@ -22,7 +22,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
             showConfirmButton: false,
             timer: 1500,
           });
-          navigate("/login");
+          navigate("/");
         })
         .catch((error) => {
           Swal.fire(error);

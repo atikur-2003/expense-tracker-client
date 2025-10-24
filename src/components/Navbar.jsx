@@ -19,7 +19,7 @@ const handleLogout = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/login");
+        navigate("/");
       })
       .catch((error) => {
         Swal.fire(error);
@@ -64,7 +64,7 @@ const handleLogout = () => {
                     {user?.displayName || "User"}
                   </p>
                   <Link
-                    to="/dashboard"
+                    to="/dashboard/overview"
                     className="block px-4 py-2 hover:bg-purple-50 text-gray-700"
                     onClick={() => setDropdownOpen(false)}
                   >

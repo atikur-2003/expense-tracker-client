@@ -21,7 +21,7 @@ const GoogleSignin = () => {
           timer: 1500,
         });
 
-        navigate(`${location.state ? location.state : "/"}`);
+        navigate('/dashboard/overview');
       })
       .catch((error) => {
         console.log(error);
