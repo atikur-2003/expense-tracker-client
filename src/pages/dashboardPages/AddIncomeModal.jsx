@@ -19,7 +19,7 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
 
   const handleEmojiClick = (emojiData) => {
     setSelectedEmoji(emojiData.emoji);
-    setFormData((prev) => ({ ...prev, icon: emojiData.emoji })); // ✅ update icon
+    setFormData((prev) => ({ ...prev, icon: emojiData.emoji }));
     setShowPicker(false);
   };
 
@@ -72,7 +72,7 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
               {selectedEmoji || "😊"}
             </button>
             {showPicker && (
-              <div className="absolute z-50 mt-2">
+              <div className="absolute z-50 mt-60">
                 <EmojiPicker
                   onEmojiClick={handleEmojiClick}
                   theme="light"

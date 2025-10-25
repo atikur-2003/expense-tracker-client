@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { FaWallet, FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { FaWallet } from "react-icons/fa";
 import {
   PieChart,
   Pie,
@@ -9,6 +9,7 @@ import {
   Legend,
   Tooltip,
 } from "recharts";
+import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
 
 const COLORS = ["#10B981", "#EF4444"]; // green for income, red for expense
 
@@ -61,35 +62,47 @@ const Overview = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Total Balance */}
         <div className="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between border-l-4 border-purple-500 transition-transform hover:scale-105">
-          <div>
-            <h2 className="text-gray-500 font-medium">Total Balance</h2>
-            <p className="text-2xl font-bold text-gray-800">
-              ${totals.balance.toFixed(2)}
-            </p>
+          <div className="flex gap-5 items-center">
+            <div className="bg-purple-500 p-3 text-white rounded-full">
+              <FaWallet size={30} />
+            </div>
+            <div>
+              <h2 className="text-gray-700 font-medium">Total Balance</h2>
+              <p className="text-lg font-semibold">
+                ${totals.balance.toFixed(2)}
+              </p>
+            </div>
           </div>
-          <FaWallet className="text-4xl text-purple-500" />
         </div>
 
         {/* Total Income */}
         <div className="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between border-l-4 border-green-500 transition-transform hover:scale-105">
-          <div>
-            <h2 className="text-gray-500 font-medium">Total Income</h2>
-            <p className="text-2xl font-bold text-gray-800">
-              ${totals.income.toFixed(2)}
-            </p>
+          <div className="flex gap-5 items-center">
+            <div className="bg-green-500 p-3 text-white rounded-full">
+              <FaArrowTrendUp size={30} />
+            </div>
+            <div>
+              <h2 className="text-gray-700 font-medium">Total Income</h2>
+              <p className="text-lg font-semibold">
+                ${totals.income.toFixed(2)}
+              </p>
+            </div>
           </div>
-          <FaArrowUp className="text-4xl text-green-500" />
         </div>
 
         {/* Total Expense */}
         <div className="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between border-l-4 border-red-500 transition-transform hover:scale-105">
-          <div>
-            <h2 className="text-gray-500 font-medium">Total Expense</h2>
-            <p className="text-2xl font-bold text-gray-800">
-              ${totals.expense.toFixed(2)}
-            </p>
+          <div className="flex gap-5 items-center">
+            <div className="bg-red-500 p-3 text-white rounded-full">
+              <FaArrowTrendDown size={30} />
+            </div>
+            <div>
+              <h2 className="text-gray-700 font-medium">Total Expense</h2>
+              <p className="text-lg font-semibold">
+                ${totals.expense.toFixed(2)}
+              </p>
+            </div>
           </div>
-          <FaArrowDown className="text-4xl text-red-500" />
         </div>
       </div>
 
@@ -101,9 +114,6 @@ const Overview = () => {
             <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
               Recent Transactions
             </h2>
-            {/* <button className="flex items-center gap-1 text-sm text-gray-600 hover:text-indigo-600 dark:text-gray-400">
-              See All →
-            </button> */}
           </div>
 
           <div className="space-y-3 max-h-[350px] overflow-y-auto">
@@ -121,7 +131,7 @@ const Overview = () => {
                           : "bg-red-100 text-red-600"
                       }`}
                     >
-                      {tx.type === "income" ? "💰" : "💸"}
+                      {tx.icon}
                     </div>
                     <div>
                       <h3 className="font-medium text-gray-800 dark:text-gray-200 capitalize">
@@ -136,12 +146,18 @@ const Overview = () => {
                   </div>
 
                   <div
-                    className={`font-semibold ${
-                      tx.type === "income" ? "text-green-500" : "text-red-500"
+                    className={` flex items-center gap-1 px-2 py-1 rounded-lg ${
+                      tx.type === "income"
+                        ? "text-green-600 bg-green-50"
+                        : "text-red-600 bg-red-50"
                     }`}
                   >
-                    {tx.type === "income" ? "+" : "-"}$
-                    {Number(tx.amount || 0).toLocaleString()}
+                    ${Number(tx.amount || 0).toLocaleString()}
+                    {tx.type === "income" ? (
+                      <FaArrowTrendUp />
+                    ) : (
+                      <FaArrowTrendDown />
+                    )}
                   </div>
                 </div>
               ))
@@ -176,7 +192,7 @@ const Overview = () => {
                     />
                   ))}
                 </Pie>
-                <Tooltip/>
+                <Tooltip />
                 <Legend />
               </PieChart>
             </ResponsiveContainer>
