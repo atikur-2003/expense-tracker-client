@@ -2,9 +2,12 @@ import { useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import EmojiPicker from "emoji-picker-react";
+import useAuth from "../../hooks/useAuth";
 
 const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
+  const {user} = useAuth()
   const [loading, setLoading] = useState(false);
+
   const axiosSecure = useAxiosSecure();
   const [showPicker, setShowPicker] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState("");
@@ -14,6 +17,7 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
     type: "income",
     source: "",
     amount: "",
+    email: user.email,
     date: "",
   });
 

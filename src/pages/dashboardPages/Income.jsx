@@ -18,6 +18,7 @@ import Swal from "sweetalert2";
 
 const Income = () => {
   const axiosSecure = useAxiosSecure();
+  
   const [incomes, setIncomes] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingIncome, setEditingIncome] = useState(null);
