@@ -13,15 +13,23 @@ import {
 import AddExpenseModal from "./AddExpenseModal";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
+import { FaArrowDown, FaEdit, FaTrash } from "react-icons/fa";
+import { FaArrowTrendDown } from "react-icons/fa6";
 
 const Expense = () => {
-  const {user}=useAuth()
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const [expenses, setExpenses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const axiosSecure = useAxiosSecure();
+  
+  const [editingExpense, setEditingExpense] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [showPicker, setShowPicker] = useState(false);
+  const [selectedEmoji, setSelectedEmoji] = useState("");
 
   // Fetch incomes from API
- useEffect(() => {
+  useEffect(() => {
     console.log("User email:", user?.email);
     if (!user?.email) return;
     const fetchExpenses = async () => {
@@ -32,6 +40,59 @@ const Expense = () => {
     fetchExpenses();
   }, [user?.email, axiosSecure]);
 
+  const handleUpdateExpense = async (id, updatedData) => {
+    try {
+      await axiosSecure.put(`/expenses/${id}`, updatedData);
+      // Update local state instantly
+      setExpenses((prev) =>
+        prev.map((item) =>
+          item._id === id ? { ...item, ...updatedData } : item
+        )
+      );
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Expense updated successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteIncome = async (id) => {
+    try {
+      await axiosSecure.delete(`/expenses/${id}`);
+      setExpenses((prev) => prev.filter((item) => item._id !== id));
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Deleted!",
+            text: "Expense has been deleted.",
+            icon: "success",
+          });
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleEditClick = (income) => {
+    setEditingExpense(income);
+    setIsEditModalOpen(true);
+  };
+
+  // chart data
   const chartData = expenses.map((item) => ({
     date: new Date(item.date).toLocaleDateString("en-GB", {
       day: "numeric",
@@ -53,10 +114,6 @@ const Expense = () => {
       );
     }
     return null;
-  };
-
-  const handleAddExpense = (newExpense) => {
-    setExpenses([...expenses, newExpense]);
   };
 
   return (
@@ -117,39 +174,190 @@ const Expense = () => {
       </div>
 
       {/* ===== Expense List Section ===== */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold">All Expenses</h3>
-          
-        </div>
-
-        {/* Expense List */}
-        <div className="space-y-3 max-h-[400px] overflow-y-auto">
-          {expenses.length > 0 ? (
-            expenses.map((exp) => (
-              <div
-                key={exp._id}
-                className="flex justify-between items-center bg-gray-50 dark:bg-gray-700 px-4 py-3 rounded-lg"
-              >
+      <div className="bg-white rounded-2xl shadow-md p-4 md:p-6">
+        {expenses.length === 0 ? (
+          <p className="text-gray-500 text-center py-6">
+            No incomes added yet.
+          </p>
+        ) : (
+          <div>
+            <div className="mb-5 flex justify-between">
+              <h1 className="text-xl font-semibold">All Incomes</h1>
+              <button className="flex items-center gap-2 text-sm px-3 py-2 text-purple-500 border border-purple-500 rounded-lg cursor-pointer bg-purple-50 hover:bg-purple-500 hover:text-white transition duration-300">
+                <FaArrowDown /> Download
+              </button>
+            </div>
+            <ul className="">
+              {expenses.map((expense) => (
                 <div>
-                  <p className="font-medium">{exp.source}</p>
-                  <p className="text-sm text-gray-500">{exp.date}</p>
+                  <li
+                    key={expense._id}
+                    className="group py-3 rounded-lg flex justify-between text-gray-700 hover:shadow-lg cursor-pointer transition-all duration-300"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="bg-red-100 text-red-600 p-2 rounded-full text-xl">
+                        {expense.icon}
+                      </span>
+                      <div>
+                        <p className="font-medium">{expense.source}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          {new Date(
+                            expense.date || expense.createdAt || Date.now()
+                          ).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Right: Amount + Hover Icons */}
+                    <div className="flex items-center gap-5 transition duration-300">
+                      {/* Action Buttons on Hover */}
+                      <div className="hidden group-hover:flex gap-4 transition duration-300">
+                        <button
+                          onClick={() => handleEditClick(expense)}
+                          className="text-blue-500 hover:text-blue-700"
+                          title="Edit"
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteIncome(expense._id)}
+                          className="text-red-500 hover:text-red-700"
+                          title="Delete"
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                      <span className="flex items-center gap-2 px-2 py-0.5 rounded-lg font-medium text-red-600 bg-green-50">
+                        + ${Number(expense.amount || 0).toLocaleString()}{" "}
+                        <FaArrowTrendDown />
+                      </span>
+                    </div>
+                  </li>
                 </div>
-                <p className="text-red-500 font-semibold">{exp.amount}</p>
-              </div>
-            ))
-          ) : (
-            <p className="text-center text-gray-500 py-8">No expenses yet</p>
-          )}
-        </div>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       {/* ===== Add Expense Modal ===== */}
       {isModalOpen && (
         <AddExpenseModal
           closeModal={() => setIsModalOpen(false)}
-          onAddExpense={handleAddExpense}
+          setExpenses={setExpenses}
         />
+      )}
+
+      {/* Edit Income Modal */}
+      {isEditModalOpen && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
+          <div className="bg-white rounded-2xl shadow-lg w-full max-w-md p-6 relative">
+            {/* Close button */}
+            <button
+              onClick={() => setIsEditModalOpen(false)}
+              className="absolute top-3 right-4 text-gray-500 hover:text-gray-700"
+            >
+              ✕
+            </button>
+
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              Edit Income
+            </h2>
+
+            {/* Emoji Picker Section */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-600 mb-1">
+                Choose Icon
+              </label>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  className="text-3xl bg-gray-100 p-2 rounded-lg hover:scale-110 transition"
+                  onClick={() => setShowPicker((prev) => !prev)}
+                >
+                  {selectedEmoji || editingExpense.emoji || editingExpense.icon}
+                </button>
+                {showPicker && (
+                  <div className="absolute z-50 mt-60">
+                    <EmojiPicker
+                      onEmojiClick={(emojiData) => {
+                        setSelectedEmoji(emojiData.emoji);
+                        setShowPicker(false);
+                      }}
+                      theme="light"
+                      height={400}
+                      width={300}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Edit Form */}
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const updatedData = {
+                  source: e.target.source.value,
+                  amount: e.target.amount.value,
+                  emoji: selectedEmoji || editingExpense.emoji,
+                  date: e.target.date.value,
+                };
+                await handleUpdateExpense(editingExpense._id, updatedData);
+                setIsEditModalOpen(false);
+              }}
+              className="space-y-4"
+            >
+              <div>
+                <label className="block text-gray-600 text-sm mb-1">
+                  Income Source
+                </label>
+                <input
+                  type="text"
+                  name="source"
+                  defaultValue={editingExpense.source}
+                  required
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-gray-600 text-sm mb-1">
+                  Amount ($)
+                </label>
+                <input
+                  type="number"
+                  name="amount"
+                  defaultValue={editingExpense.amount}
+                  required
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-gray-600 text-sm mb-1">Date</label>
+                <input
+                  type="date"
+                  name="date"
+                  defaultValue={
+                    editingExpense.date
+                      ? editingExpense.date.split("T")[0]
+                      : new Date().toISOString().split("T")[0]
+                  }
+                  required
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full border border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white py-2 rounded-lg cursor-pointer transition duration-300"
+              >
+                Update Expense
+              </button>
+            </form>
+          </div>
+        </div>
       )}
     </div>
   );

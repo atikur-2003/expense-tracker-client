@@ -27,7 +27,7 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
     setShowPicker(false);
   };
 
-  const handleSubmit = async (e) => {
+  const handleIncomeSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -88,7 +88,7 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleIncomeSubmit} className="space-y-4">
           <div>
             <label className="block text-gray-600 text-sm mb-1">
               Income Source
@@ -96,6 +96,7 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
             <input
               type="text"
               name="source"
+              placeholder="salary, freelance etc.."
               required
               value={formData.source}
               onChange={(e) =>

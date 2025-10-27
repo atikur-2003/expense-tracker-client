@@ -2,25 +2,34 @@ import React, { useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
+import EmojiPicker from "emoji-picker-react";
 
-const AddExpenseModal = ({ closeModal, onAddExpense }) => {
+const AddExpenseModal = ({ closeModal, setExpenses }) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
+  const [showPicker, setShowPicker] = useState(false);
+  const [selectedEmoji, setSelectedEmoji] = useState("");
   const [formData, setFormData] = useState({
-    type: "expense",
+    icon:"",
     source: "",
     amount: "",
     userEmail:user.email,
     date: "",
   });
 
-  const handleSubmit = async (e) => {
+   const handleEmojiClick = (emojiData) => {
+    setSelectedEmoji(emojiData.emoji);
+    setFormData((prev) => ({ ...prev, icon: emojiData.emoji }));
+    setShowPicker(false);
+  };
+
+  const handleExpenseSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       const res = await axiosSecure.post("/expenses", formData);
-      onAddExpense((prev) => [...prev, res.data]);
+      setExpenses((prev) => [...prev, res.data]);
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -38,52 +47,102 @@ const AddExpenseModal = ({ closeModal, onAddExpense }) => {
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg w-96">
-        <h2 className="text-xl font-semibold mb-4">Add Expense</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            placeholder="Category"
-            className="w-full border p-2 rounded-md"
-            value={formData.source}
-            onChange={(e) =>
-              setFormData({ ...formData, source: e.target.value })
-            }
-          />
-          <input
-            type="number"
-            placeholder="Amount"
-            className="w-full border p-2 rounded-md"
-            value={formData.amount}
-            onChange={(e) =>
-              setFormData({ ...formData, amount: e.target.value })
-            }
-          />
-          <input
-            type="date"
-            className="w-full border p-2 rounded-md"
-            value={formData.date}
-            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-          />
-          <div className="flex justify-end gap-2">
+          <div className="bg-white rounded-2xl shadow-lg w-full max-w-md p-6 relative">
             <button
-              type="button"
               onClick={closeModal}
-              className="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 cursor-pointer"
+              className="absolute top-3 right-4 text-gray-500 hover:text-gray-700"
             >
-              Cancel
+              ✕
             </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className="px-4 py-2 rounded-md border border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white cursor-pointer"
-            >
-              {loading ? "Adding..." : "Add"}
-            </button>
+    
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              Add New Expense
+            </h2>
+    
+            {/* Emoji Picker Section */}
+            <div className="mb-4 relative">
+              <label className="block text-sm font-medium text-gray-600 mb-1">
+                Choose Icon
+              </label>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  className="text-3xl bg-gray-100 p-2 rounded-lg hover:scale-110 transition"
+                  onClick={() => setShowPicker(!showPicker)}
+                >
+                  {selectedEmoji || "😊"}
+                </button>
+                {showPicker && (
+                  <div className="absolute z-50 mt-60">
+                    <EmojiPicker
+                      onEmojiClick={handleEmojiClick}
+                      theme="light"
+                      height={400}
+                      width={300}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+    
+            <form onSubmit={handleExpenseSubmit} className="space-y-4">
+              <div>
+                <label className="block text-gray-600 text-sm mb-1">
+                  Category
+                </label>
+                <input
+                  type="text"
+                  name="source"
+                  placeholder="grocery, rent, food etc.."
+                  required
+                  value={formData.source}
+                  onChange={(e) =>
+                    setFormData({ ...formData, source: e.target.value })
+                  }
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+    
+              <div>
+                <label className="block text-gray-600 text-sm mb-1">
+                  Amount ($)
+                </label>
+                <input
+                  type="number"
+                  name="amount"
+                  required
+                  value={formData.amount}
+                  onChange={(e) =>
+                    setFormData({ ...formData, amount: e.target.value })
+                  }
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+    
+              <div>
+                <label className="block text-gray-600 text-sm mb-1">Date</label>
+                <input
+                  type="date"
+                  name="date"
+                  required
+                  value={formData.date}
+                  onChange={(e) =>
+                    setFormData({ ...formData, date: e.target.value })
+                  }
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+    
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full border border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white py-2 rounded-lg cursor-pointer transition duration-300"
+              >
+                {loading ? "Adding..." : "Add Expense"}
+              </button>
+            </form>
           </div>
-        </form>
-      </div>
-    </div>
+        </div>
   );
 };
 
