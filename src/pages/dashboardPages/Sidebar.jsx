@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import { FaWallet } from "react-icons/fa6";
 import { RiHandCoinFill } from "react-icons/ri";
@@ -8,27 +8,39 @@ import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 
 const Sidebar = ({ isOpen, closeSidebar }) => {
-
-  const { logOut } = useAuth();
+  const { user, logOut } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+
+  // Log user to debug
+  useEffect(() => {
+    console.log("User state:", user);
+    if (user) {
+      setLoading(false); // Set loading to false once user is available
+    }
+  }, [user]);
 
   const handleLogout = () => {
-      logOut()
-        .then(() => {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "You Logged Out successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          navigate("/");
-        })
-        .catch((error) => {
-          Swal.fire(error);
+    logOut()
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "You Logged Out successfully",
+          showConfirmButton: false,
+          timer: 1500,
         });
-    }; 
+        navigate("/");
+      })
+      .catch((error) => {
+        Swal.fire(error);
+      });
+  };
 
+
+  if (loading) {
+    return <div className="w-64 h-screen bg-gray-800 text-white p-4">Loading...</div>; // Loading state
+  }
   return (
     <>
       <div
@@ -48,6 +60,22 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
             </h1>
           </Link>
         </div>
+
+        {/* User Profile Section */}
+      <div className="flex flex-col items-center my-5">
+        <div className="w-24 h-24 mb-4">
+          <img
+            src={user.photoURL}
+            alt={`${user.displayName}'s avatar`}
+            className="w-full h-full rounded-full object-cover 
+            border-2 border-purple-500"
+          />
+        </div>
+        <div className="text-center">
+          <h3 className="text-lg font-semibold">{user.displayName}</h3>
+          <p className="text-sm text-gray-400">{user.email}</p>
+        </div>
+      </div>
 
         <nav className="flex flex-col gap-2 p-4">
           <NavLink
@@ -91,8 +119,9 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
             <RiHandCoinFill /> Expense
           </NavLink>
           <button
-          onClick={handleLogout}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer hover:bg-purple-100">
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer hover:bg-purple-100"
+          >
             <LuLogOut /> Logout
           </button>
         </nav>

@@ -177,16 +177,16 @@ const Expense = () => {
       {/* ===== Expense List Section ===== */}
       <div className="bg-white rounded-2xl shadow-md p-4 md:p-6">
         {expenses.length === 0 ? (
-          <p className="text-gray-500 text-center py-6">
-            No incomes added yet.
+          <p className="text-gray-500 text-lg text-center py-6">
+            No Expense added yet.
           </p>
         ) : (
           <div>
             <div className="mb-5 flex justify-between">
-              <h1 className="text-xl font-semibold">All Incomes</h1>
-              <button className="flex items-center gap-2 text-sm px-3 py-2 text-purple-500 border border-purple-500 rounded-lg cursor-pointer bg-purple-50 hover:bg-purple-500 hover:text-white transition duration-300">
+              <h1 className="text-xl font-semibold">All Expenses</h1>
+              {/* <button className="flex items-center gap-2 text-sm px-3 py-2 text-purple-500 border border-purple-500 rounded-lg cursor-pointer bg-purple-50 hover:bg-purple-500 hover:text-white transition duration-300">
                 <FaArrowDown /> Download
-              </button>
+              </button> */}
             </div>
             <ul className="">
               {expenses.map((expense) => (
@@ -249,7 +249,8 @@ const Expense = () => {
         />
       )}
 
-      {/* Edit Income Modal */}
+
+      {/* Edit expense Modal */}
       {isEditModalOpen && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
           <div className="bg-white rounded-2xl shadow-lg w-full max-w-md p-6 relative">
