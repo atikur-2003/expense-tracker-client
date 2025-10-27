@@ -10,38 +10,70 @@ import {
   Tooltip,
 } from "recharts";
 import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
+import useAuth from "../../hooks/useAuth";
 
 const COLORS = ["#10B981", "#EF4444"]; // green for income, red for expense
 
 const Overview = () => {
+  const {user}=useAuth()
   const axiosSecure = useAxiosSecure();
   const [totals, setTotals] = useState({ income: 0, expense: 0, balance: 0 });
   const [transactions, setTransactions] = useState([]);
 
+
+  // fetching summery
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch summary
-        const resSummary = await axiosSecure.get("/summary");
-        const { totalIncome, totalExpense } = resSummary.data;
+  if (!user?.email) {
+    // console.log("No user email, skipping summary fetch");
+    return;
+  }
 
-        const balance = totalIncome - totalExpense;
+  const fetchSummary = async () => {
+    try {
+      const resSummary = await axiosSecure.get(`/summary?email=${user.email.toLowerCase()}`);
+      const { totalIncome, totalExpense, balance } = resSummary.data;
+      // console.log("Fetched summary:", resSummary.data);
 
-        setTotals({
-          income: totalIncome || 0,
-          expense: totalExpense || 0,
-          balance,
-        });
+      setTotals({
+        income: totalIncome || 0,
+        expense: totalExpense || 0,
+        balance: balance || 0, // Use balance from API response
+      });
+    } catch (error) {
+      console.error("Error fetching summary:", error);
+      setTotals({
+        income: 0,
+        expense: 0,
+        balance: 0,
+      }); // Fallback in case of error
+    }
+  };
 
-        // Fetch recent transactions
-        const resTx = await axiosSecure.get("/transactions");
-        setTransactions(resTx.data || []);
-      } catch (err) {
-        console.error("Error fetching data:", err);
-      }
-    };
-    fetchData();
-  }, [axiosSecure]);
+  fetchSummary();
+}, [user?.email, axiosSecure]);
+
+
+// fetching recent transaction
+useEffect(() => {
+  if (!user?.email) {
+    console.log("No user email, skipping transactions fetch");
+    return;
+  }
+
+  const fetchTransactions = async () => {
+    try {
+      // Fetch recent transactions from the correct endpoint
+      const resTx = await axiosSecure.get(`/transactions?email=${user.email.toLowerCase()}`);
+      console.log("Fetched transactions:", resTx.data);
+      setTransactions(resTx.data || []); // Ensure an array is set, even if empty
+    } catch (err) {
+      console.error("Error fetching transactions:", err);
+      setTransactions([]); // Fallback to empty array on error
+    }
+  };
+
+  fetchTransactions();
+}, [user?.email, axiosSecure]);
 
   const chartData = [
     { name: "Income", value: totals.income },

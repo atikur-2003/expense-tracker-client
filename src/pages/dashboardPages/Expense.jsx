@@ -12,20 +12,25 @@ import {
 } from "recharts";
 import AddExpenseModal from "./AddExpenseModal";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAuth from "../../hooks/useAuth";
 
 const Expense = () => {
+  const {user}=useAuth()
   const [expenses, setExpenses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const axiosSecure = useAxiosSecure();
 
   // Fetch incomes from API
-  useEffect(() => {
+ useEffect(() => {
+    console.log("User email:", user?.email);
+    if (!user?.email) return;
     const fetchExpenses = async () => {
-      const res = await axiosSecure.get("/expenses");
+      const res = await axiosSecure.get(`/expenses?email=${user.email}`);
+      console.log("Fetched expense:", res.data);
       setExpenses(res.data);
     };
     fetchExpenses();
-  }, [axiosSecure]);
+  }, [user?.email, axiosSecure]);
 
   const chartData = expenses.map((item) => ({
     date: new Date(item.date).toLocaleDateString("en-GB", {
@@ -123,7 +128,7 @@ const Expense = () => {
           {expenses.length > 0 ? (
             expenses.map((exp) => (
               <div
-                key={exp.id}
+                key={exp._id}
                 className="flex justify-between items-center bg-gray-50 dark:bg-gray-700 px-4 py-3 rounded-lg"
               >
                 <div>

@@ -15,10 +15,12 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { FaArrowDown, FaArrowTrendUp, FaTrash } from "react-icons/fa6";
 import EmojiPicker from "emoji-picker-react";
 import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
 
 const Income = () => {
   const axiosSecure = useAxiosSecure();
-  
+  const { user } = useAuth();
+
   const [incomes, setIncomes] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingIncome, setEditingIncome] = useState(null);
@@ -28,12 +30,15 @@ const Income = () => {
 
   // Fetch incomes from API
   useEffect(() => {
+    console.log("User email:", user?.email);
+    if (!user?.email) return;
     const fetchIncomes = async () => {
-      const res = await axiosSecure.get("/incomes");
+      const res = await axiosSecure.get(`/incomes?email=${user.email}`);
+      console.log("Fetched incomes:", res.data);
       setIncomes(res.data);
     };
     fetchIncomes();
-  }, [axiosSecure]);
+  }, [user?.email, axiosSecure]);
 
   const handleEditClick = (income) => {
     setEditingIncome(income);

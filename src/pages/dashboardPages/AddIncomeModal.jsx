@@ -17,7 +17,7 @@ const AddIncomeModal = ({ setIsModalOpen, setIncomes }) => {
     type: "income",
     source: "",
     amount: "",
-    email: user.email,
+    userEmail: user.email,
     date: "",
   });
 

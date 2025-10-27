@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
 
 const AddExpenseModal = ({ closeModal, onAddExpense }) => {
+  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
   const [formData, setFormData] = useState({
-    type:'expense',
+    type: "expense",
     source: "",
     amount: "",
+    userEmail:user.email,
     date: "",
   });
 
