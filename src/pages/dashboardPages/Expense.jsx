@@ -16,13 +16,15 @@ import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { FaArrowDown, FaEdit, FaTrash } from "react-icons/fa";
 import { FaArrowTrendDown } from "react-icons/fa6";
+import EmojiPicker from "emoji-picker-react";
 
 const Expense = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+
   const [expenses, setExpenses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   const [editingExpense, setEditingExpense] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
@@ -30,20 +32,19 @@ const Expense = () => {
 
   // Fetch incomes from API
   useEffect(() => {
-    console.log("User email:", user?.email);
     if (!user?.email) return;
     const fetchExpenses = async () => {
       const res = await axiosSecure.get(`/expenses?email=${user.email}`);
-      console.log("Fetched expense:", res.data);
       setExpenses(res.data);
     };
     fetchExpenses();
   }, [user?.email, axiosSecure]);
 
+
+  // handle update expense
   const handleUpdateExpense = async (id, updatedData) => {
     try {
       await axiosSecure.put(`/expenses/${id}`, updatedData);
-      // Update local state instantly
       setExpenses((prev) =>
         prev.map((item) =>
           item._id === id ? { ...item, ...updatedData } : item
@@ -87,8 +88,8 @@ const Expense = () => {
     }
   };
 
-  const handleEditClick = (income) => {
-    setEditingExpense(income);
+  const handleEditClick = (expense) => {
+    setEditingExpense(expense);
     setIsEditModalOpen(true);
   };
 
@@ -300,7 +301,7 @@ const Expense = () => {
                 const updatedData = {
                   source: e.target.source.value,
                   amount: e.target.amount.value,
-                  emoji: selectedEmoji || editingExpense.emoji,
+                  icon: selectedEmoji || editingExpense.emoji,
                   date: e.target.date.value,
                 };
                 await handleUpdateExpense(editingExpense._id, updatedData);
