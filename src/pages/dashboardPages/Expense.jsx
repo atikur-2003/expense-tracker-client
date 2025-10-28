@@ -193,7 +193,7 @@ const Expense = () => {
                 <div>
                   <li
                     key={expense._id}
-                    className="group py-3 rounded-lg flex justify-between text-gray-700 hover:shadow-lg cursor-pointer transition-all duration-300"
+                    className="group p-3 rounded-lg flex justify-between text-gray-700 hover:shadow-lg cursor-pointer transition-all duration-300"
                   >
                     <div className="flex items-center gap-3">
                       <span className="bg-red-100 text-red-600 p-2 rounded-full text-xl">

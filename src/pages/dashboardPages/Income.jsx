@@ -120,7 +120,7 @@ const Income = () => {
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="flex items-center gap-2 px-4 py-2 border border-purple-400 text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all"
+              className="border border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white px-4 py-2 rounded-lg font-medium cursor-pointer transition duration-300"
             >
               <span className="text-lg">＋</span> Add Income
             </button>
@@ -193,7 +193,7 @@ const Income = () => {
                   <div>
                     <li
                       key={income._id}
-                      className="group py-3 rounded-lg flex justify-between text-gray-700 hover:shadow-lg cursor-pointer transition-all duration-300"
+                      className="group p-3 rounded-lg flex justify-between text-gray-700 hover:shadow-lg cursor-pointer transition-all duration-300"
                     >
                       <div className="flex items-center gap-3">
                         <span className="bg-green-100 text-green-600 p-2 rounded-full text-xl">

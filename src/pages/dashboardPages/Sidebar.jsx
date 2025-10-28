@@ -63,7 +63,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
 
         {/* User Profile Section */}
       <div className="flex flex-col items-center my-5">
-        <div className="w-24 h-24 mb-4">
+        <div className="w-24 h-24 mb-2">
           <img
             src={user.photoURL}
             alt={`${user.displayName}'s avatar`}
