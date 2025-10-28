@@ -42,10 +42,10 @@ const OverviewExpenseSection = () => {
 
   return (
     <div>
-      <div className="grid md:grid-cols-2 gap-6 mt-6">
+      <div className="grid md:grid-cols-2 gap-6 mt-10 md:mt-16">
         {/* ===== Recent Expenses ===== */}
-        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm p-6">
-          <div className="flex items-center justify-between mb-4">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm py-6 px-1 md:px-3">
+          <div className="flex items-center justify-between mb-4 pl-4">
             <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
               Recent Expenses
             </h2>
@@ -60,11 +60,7 @@ const OverviewExpenseSection = () => {
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-10 h-10 flex items-center justify-center rounded-full text-xl ${
-                        tx.type === "income"
-                          ? "bg-green-100 text-green-600"
-                          : "bg-red-100 text-red-600"
-                      }`}
+                      className={`w-10 h-10 flex items-center justify-center rounded-full text-xl bg-red-100 text-red-600`}
                     >
                       {tx.icon}
                     </div>
@@ -99,10 +95,10 @@ const OverviewExpenseSection = () => {
         </div>
 
         {/* ===== Financial Overview Chart ===== */}
-        <div className="bg-white hidden md:block">
-            <div className="text-center py-3">
-                <h1>Expenses Overview</h1>
-            </div>
+        <div className="bg-white h-100 rounded-xl mb-10 md:mb-0">
+          <div className="text-center py-3">
+            <h1>Expenses Overview</h1>
+          </div>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={chartData}

@@ -52,8 +52,8 @@ const RecentTransaction = ({ totals }) => {
     <div>
       <div className="grid md:grid-cols-2 gap-6 mt-6">
         {/* ===== Recent Transactions ===== */}
-        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm p-6">
-          <div className="flex items-center justify-between mb-4">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm py-6 px-1 md:px-3">
+          <div className="flex items-center justify-between mb-4 pl-4">
             <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
               Recent Transactions
             </h2>
@@ -113,7 +113,7 @@ const RecentTransaction = ({ totals }) => {
         </div>
 
         {/* ===== Financial Overview Chart ===== */}
-        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm p-6 flex flex-col items-center justify-center">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm py-6 flex flex-col items-center justify-center">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
             Financial Overview
           </h2>

@@ -47,7 +47,7 @@ const Overview = () => {
 
 
   return (
-    <div className="p-3 md:p-5 lg:p-0 space-y-8">
+    <div className="space-y-8">
       {/* --- Header --- */}
       <div className="mb-10">
         <h1 className="text-2xl font-semibold mb-2 text-gray-800">
