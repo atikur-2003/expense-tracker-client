@@ -33,13 +33,13 @@ const OverviewIncomeSection = () => {
   }, [user?.email, axiosSecure]);
 
   // chart data
-  const chartData = incomes.map((item) => ({
-    date: new Date(item.date).toLocaleDateString("en-GB", {
+  const chartData = incomes.slice(0, 4).map((income) => ({
+    date: new Date(income.date).toLocaleDateString("en-GB", {
       day: "numeric",
       month: "short",
     }),
-    amount: item.amount,
-    source: item.source,
+    amount: income.amount,
+    source: income.source,
   }));
 
   // ✅ custom tooltip
@@ -105,7 +105,7 @@ const OverviewIncomeSection = () => {
 
           <div className="space-y-3 max-h-[350px] overflow-y-auto">
             {incomes.length ? (
-              incomes.map((tx, index) => (
+              incomes.slice(0, 4).map((tx, index) => (
                 <div
                   key={index}
                   className="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition"

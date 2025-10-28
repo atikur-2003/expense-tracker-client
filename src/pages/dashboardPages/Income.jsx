@@ -16,6 +16,7 @@ import { FaArrowDown, FaArrowTrendUp, FaTrash } from "react-icons/fa6";
 import EmojiPicker from "emoji-picker-react";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
+import * as XLSX from "xlsx";
 
 const Income = () => {
   const axiosSecure = useAxiosSecure();
@@ -90,6 +91,41 @@ const Income = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  // down all income as excel sheet handler
+  const downloadIncomeExcel = () => {
+    // ---- a) Prepare clean rows (no React keys, no _id if you don’t want it)
+    const rows = incomes.map((inc) => ({
+      Date: new Date(inc.date).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }),
+      Source: inc.source || "—",
+      Amount: Number(inc.amount) || 0,
+      Description: inc.description || "",
+    }));
+
+    // ---- b) Create workbook + worksheet
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Incomes");
+
+    // ---- c) Auto-size columns (optional but nice)
+    const colWidths = [
+      { wch: 12 }, // Date
+      { wch: 20 }, // Source
+      { wch: 12 }, // Amount
+      { wch: 30 }, // Description
+    ];
+    ws["!cols"] = colWidths;
+
+    // ---- d) Trigger download
+    const fileName = `Income_Report_${new Date()
+      .toISOString()
+      .slice(0, 10)}.xlsx`;
+    XLSX.writeFile(wb, fileName);
   };
 
   // Format date for better X-axis labels
@@ -184,9 +220,12 @@ const Income = () => {
             <div>
               <div className="mb-5 flex justify-between">
                 <h1 className="text-xl font-semibold">All Incomes</h1>
-                {/* <button className="flex items-center gap-2 text-sm px-3 py-2 text-purple-500 border border-purple-500 rounded-lg cursor-pointer bg-purple-50 hover:bg-purple-500 hover:text-white transition duration-300">
+                <button
+                  onClick={downloadIncomeExcel}
+                  className="flex items-center gap-2 text-sm px-3 py-2 text-purple-500 border border-purple-500 rounded-lg cursor-pointer bg-purple-50 hover:bg-purple-500 hover:text-white transition duration-300"
+                >
                   <FaArrowDown /> Download
-                </button> */}
+                </button>
               </div>
               <ul className="">
                 {incomes.map((income) => (
@@ -249,7 +288,6 @@ const Income = () => {
           />
         )}
       </div>
-
 
       {/* Edit Income Modal */}
       {isEditModalOpen && (

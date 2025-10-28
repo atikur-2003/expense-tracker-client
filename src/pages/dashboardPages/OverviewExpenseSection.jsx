@@ -29,13 +29,13 @@ const OverviewExpenseSection = () => {
   }, [user?.email, axiosSecure]);
 
   // Format date for better X-axis labels
-  const chartData = expenses.map((income) => ({
-    name: new Date(income.date).toLocaleDateString("en-GB", {
+  const chartData = expenses.slice(0, 4).map((expense) => ({
+    name: new Date(expense.date).toLocaleDateString("en-GB", {
       day: "numeric",
       month: "short",
     }),
-    source: income.source,
-    amount: income.amount,
+    source: expense.source,
+    amount: expense.amount,
   }));
 
   const barColors = ["#8b5cf6", "#c4b5fd"];
@@ -53,7 +53,7 @@ const OverviewExpenseSection = () => {
 
           <div className="space-y-3 max-h-[350px] overflow-y-auto">
             {expenses.length ? (
-              expenses.map((tx, index) => (
+              expenses.slice(0, 4).map((tx, index) => (
                 <div
                   key={index}
                   className="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition"
