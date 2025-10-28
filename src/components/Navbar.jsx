@@ -27,7 +27,7 @@ const handleLogout = () => {
   };
 
   return (
-    <div className="navbar fixed top-0 w-full z-50 bg-base-200 px-5 md:px-10 lg:px-20 shadow-sm">
+    <div className="navbar fixed top-0 w-full z-50 bg-white px-5 md:px-10 lg:px-20 shadow-sm">
       <div className="navbar-start">
         <Link to="/">
           <p className="text-xl text-purple-500 font-bold">Expense Tracker</p>
@@ -72,7 +72,7 @@ const handleLogout = () => {
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="block w-full text-left px-4 py-2 hover:bg-purple-50 text-gray-700 cursor-pointer hover:rounded-lg"
+                    className="block w-full text-red-500 text-left px-4 py-2 hover:bg-purple-50 cursor-pointer hover:rounded-lg"
                   >
                     Logout
                   </button>

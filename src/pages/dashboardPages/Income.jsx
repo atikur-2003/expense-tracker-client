@@ -213,13 +213,13 @@ const Income = () => {
         {/* Income List + Button */}
         <div className="bg-white rounded-2xl shadow-md p-4 md:p-6">
           {incomes.length === 0 ? (
-            <p className="text-gray-500 text-lg text-center py-6">
+            <p className="text-gray-800 text-lg text-center py-6">
               No incomes added yet.
             </p>
           ) : (
             <div>
               <div className="mb-5 flex justify-between">
-                <h1 className="text-xl font-semibold">All Incomes</h1>
+                <h1 className="text-xl text-gray-800 font-semibold">All Incomes</h1>
                 <button
                   onClick={downloadIncomeExcel}
                   className="flex items-center gap-2 text-sm px-3 py-2 text-purple-500 border border-purple-500 rounded-lg cursor-pointer bg-purple-50 hover:bg-purple-500 hover:text-white transition duration-300"

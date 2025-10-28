@@ -11,7 +11,8 @@ import {
 } from "recharts";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { FaArrowTrendDown } from "react-icons/fa6";
+import { FaArrowRightLong, FaArrowTrendDown } from "react-icons/fa6";
+import { Link } from "react-router";
 
 const OverviewExpenseSection = () => {
   const { user } = useAuth();
@@ -44,11 +45,14 @@ const OverviewExpenseSection = () => {
     <div>
       <div className="grid md:grid-cols-2 gap-6 mt-10 md:mt-16">
         {/* ===== Recent Expenses ===== */}
-        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm py-6 px-1 md:px-3">
-          <div className="flex items-center justify-between mb-4 pl-4">
+        <div className="bg-white  rounded-2xl shadow-sm py-6 px-1 md:px-3">
+          <div className="flex items-center justify-between mb-4 px-4">
             <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
               Recent Expenses
             </h2>
+            <Link to='/dashboard/expense' className="flex text-[15px] items-center gap-2 px-3 py-1 bg-gray-100 text-gray-700 rounded-lg  hover:text-purple-500 hover:bg-purple-50 transition duration-300">
+            See All <FaArrowRightLong size={15}/>
+            </Link>
           </div>
 
           <div className="space-y-3 max-h-[350px] overflow-y-auto">
@@ -87,7 +91,7 @@ const OverviewExpenseSection = () => {
                 </div>
               ))
             ) : (
-              <p className="text-gray-500 dark:text-gray-400 text-center mt-6">
+              <p className="text-gray-800 text-center mt-6">
                 No Expense Added yet.
               </p>
             )}
@@ -96,7 +100,7 @@ const OverviewExpenseSection = () => {
 
         {/* ===== Financial Overview Chart ===== */}
         <div className="bg-white h-100 rounded-xl mb-10 md:mb-0">
-          <div className="text-center py-3">
+          <div className="text-center text-gray-800 text-xl font-semibold py-3">
             <h1>Expenses Overview</h1>
           </div>
           <ResponsiveContainer width="100%" height="100%">

@@ -1,11 +1,10 @@
 import React from "react";
 import Swal from "sweetalert2";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 
 const GoogleSignin = () => {
   const { googleSignIn } = useAuth();
-  const location = useLocation();
   const navigate = useNavigate();
 
   const handleGoogleSignin = () => {
@@ -35,7 +34,7 @@ const GoogleSignin = () => {
       </div>
       <button
         onClick={handleGoogleSignin}
-        className="btn w-full border border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white"
+        className="btn shadow-none bg-gray-50 w-full border border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white"
       >
         <svg
           aria-label="Google logo"

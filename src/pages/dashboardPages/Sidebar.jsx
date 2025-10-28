@@ -6,6 +6,7 @@ import { FaHome } from "react-icons/fa";
 import { LuLogOut } from "react-icons/lu";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import Loading from "../../components/Loading";
 
 const Sidebar = ({ isOpen, closeSidebar }) => {
   const { user, logOut } = useAuth();
@@ -14,9 +15,8 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
 
   // Log user to debug
   useEffect(() => {
-    console.log("User state:", user);
     if (user) {
-      setLoading(false); // Set loading to false once user is available
+      setLoading(false);
     }
   }, [user]);
 
@@ -39,7 +39,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
 
 
   if (loading) {
-    return <div className="w-64 h-screen bg-gray-800 text-white p-4">Loading...</div>; // Loading state
+    return <Loading/>;
   }
   return (
     <>
@@ -50,7 +50,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
         onClick={closeSidebar}
       ></div>
       <div
-        className={`fixed top-0 left-0 z-40 bg-white shadow-md h-full transform transition-transform duration-300 lg:translate-x-0
+        className={`fixed top-0 left-0 z-40  shadow-md h-full transform transition-transform duration-300 lg:translate-x-0
         ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="p-5 border-b border-gray-200">
@@ -72,8 +72,8 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
           />
         </div>
         <div className="text-center">
-          <h3 className="text-lg font-semibold">{user.displayName}</h3>
-          <p className="text-sm text-gray-400">{user.email}</p>
+          <h3 className="text-lg text-gray-800 font-semibold">{user.displayName}</h3>
+          <p className="text-sm text-gray-600">{user.email}</p>
         </div>
       </div>
 
@@ -120,7 +120,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
           </NavLink>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer hover:bg-purple-100"
+            className="flex text-gray-800 items-center gap-2 px-4 py-2 rounded-lg cursor-pointer hover:bg-purple-100"
           >
             <LuLogOut /> Logout
           </button>

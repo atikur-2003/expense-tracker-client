@@ -7,12 +7,10 @@ import OverviewExpenseSection from "./OverviewExpenseSection";
 import OverviewIncomeSection from "./OverviewIncomeSection";
 import RecentTransaction from "./RecentTransaction";
 
-
 const Overview = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [totals, setTotals] = useState({ income: 0, expense: 0, balance: 0 });
-
   // fetching summery
   useEffect(() => {
     if (!user?.email) {
@@ -25,12 +23,11 @@ const Overview = () => {
           `/summary?email=${user.email.toLowerCase()}`
         );
         const { totalIncome, totalExpense, balance } = resSummary.data;
-        // console.log("Fetched summary:", resSummary.data);
 
         setTotals({
           income: totalIncome || 0,
           expense: totalExpense || 0,
-          balance: balance || 0, // Use balance from API response
+          balance: balance || 0,
         });
       } catch (error) {
         console.error("Error fetching summary:", error);
@@ -38,16 +35,15 @@ const Overview = () => {
           income: 0,
           expense: 0,
           balance: 0,
-        }); // Fallback in case of error
+        });
       }
     };
 
     fetchSummary();
   }, [user?.email, axiosSecure]);
 
-
   return (
-    <div className="space-y-8">
+    <div className="">
       {/* --- Header --- */}
       <div className="mb-10">
         <h1 className="text-2xl font-semibold mb-2 text-gray-800">
@@ -66,7 +62,7 @@ const Overview = () => {
             </div>
             <div>
               <h2 className="text-gray-700 font-medium">Total Balance</h2>
-              <p className="text-lg font-semibold">
+              <p className="text-lg text-gray-700 font-semibold">
                 ${totals.balance.toFixed(2)}
               </p>
             </div>
@@ -81,7 +77,7 @@ const Overview = () => {
             </div>
             <div>
               <h2 className="text-gray-700 font-medium">Total Income</h2>
-              <p className="text-lg font-semibold">
+              <p className="text-lg text-gray-700 font-semibold">
                 ${totals.income.toFixed(2)}
               </p>
             </div>
@@ -96,7 +92,7 @@ const Overview = () => {
             </div>
             <div>
               <h2 className="text-gray-700 font-medium">Total Expense</h2>
-              <p className="text-lg font-semibold">
+              <p className="text-lg text-gray-700 font-semibold">
                 ${totals.expense.toFixed(2)}
               </p>
             </div>
@@ -105,7 +101,7 @@ const Overview = () => {
       </div>
 
       {/* --- Bottom Section --- */}
-      <RecentTransaction totals={totals}/>
+      <RecentTransaction totals={totals} />
       <OverviewExpenseSection />
       <OverviewIncomeSection />
     </div>

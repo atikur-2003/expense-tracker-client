@@ -41,28 +41,28 @@ const Login = () => {
   };
   return (
     <div className="py-20 px-3 md:px-0">
-      <div className="card bg-base-100 w-full mx-auto max-w-sm shrink-0 shadow-2xl">
+      <div className="card bg-white w-full mx-auto max-w-sm shrink-0 shadow-2xl">
         <div className="text-center mt-5">
           <h1 className="text-2xl text-purple-500 font-semibold">Log In your account</h1>
         </div>
         <div className="card-body">
           <form onSubmit={handleSignIn} className="fieldset">
-            <label className="label text-lg font-medium">Email</label>
+            <label className="label text-lg text-gray-800 font-medium">Email</label>
             <input
               type="email"
               name="email"
-              className="input focus:outline-none focus:border-purple-500 mb-2"
+              className="input text-gray-800 bg-gray-50 outline outline-gray-200 focus:outline-none focus:border-purple-500 mb-2"
               placeholder="Email"
               ref={emailRef}
               required
             />
 
-            <label className="label text-lg font-medium">Password</label>
+            <label className="label text-lg text-gray-800 font-medium">Password</label>
             <div className="relative">
               <input
                 type={showPass ? "text" : "password"}
                 name="password"
-                className="input focus:outline-none focus:border-purple-500 mb-2"
+                className="input text-gray-800 bg-gray-50 outline outline-gray-200 focus:outline-none focus:border-purple-500 mb-2"
                 placeholder="Password"
                 required
               />
@@ -76,13 +76,13 @@ const Login = () => {
               </button>
             </div>
             <div className="mt-2">
-              <a className="link link-hover text-sm">
+              <a className="link link-hover text-gray-600 text-sm">
                 Forgot password?
               </a>
             </div>
             <button
               type="submit"
-              className="btn border border-purple-500  text-purple-500 hover:bg-purple-500 hover:text-white mt-4 mb-2"
+              className="btn shadow-none bg-gray-50 border border-purple-500  text-purple-500 hover:bg-purple-500 hover:text-white mt-4 mb-2"
             >
               Log In
             </button>
@@ -93,7 +93,7 @@ const Login = () => {
               </p>
             )}
 
-            <p className="text-base mt-3">
+            <p className="text-gray-800 text-base mt-3">
               Don't have an account ?{" "}
               <Link to="/signup" className="text-purple-500 underline">
                 Signup here

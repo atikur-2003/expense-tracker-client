@@ -105,7 +105,7 @@ const RecentTransaction = ({ totals }) => {
                 </div>
               ))
             ) : (
-              <p className="text-gray-500 dark:text-gray-400 text-center mt-6">
+              <p className="text-gray-800 text-center mt-6">
                 No recent transactions yet.
               </p>
             )}

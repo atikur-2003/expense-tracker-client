@@ -78,8 +78,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="hero py-20 bg-base-200 min-h-screen">
-      <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+    <div className="hero py-20 min-h-screen">
+      <div className="card bg-white w-full max-w-sm shrink-0 shadow-2xl">
         <div className="text-center mt-5">
           <h1 className="text-2xl text-purple-500 font-semibold">
             Register your account
@@ -87,37 +87,37 @@ const Signup = () => {
         </div>
         <div className="card-body">
           <form onSubmit={handleRegister} className="fieldset">
-            <label className="label text-base font-medium">Name</label>
+            <label className="label text-base text-gray-800 font-medium">Name</label>
             <input
               type="text"
               name="name"
-              className="input focus:outline-none focus:border-purple-500 mb-2"
+              className="input text-gray-800 bg-gray-50 outline outline-gray-200 focus:outline-none focus:border-purple-500 mb-2"
               placeholder="Enter Name"
             />
 
-            <label className="label text-base font-medium">Profile Photo</label>
+            <label className="label text-base text-gray-800 font-medium">Profile Photo</label>
             <input
               onChange={handleUploadImage}
               type="file"
               name="photo"
-              className="input focus:outline-none focus:border-purple-500 mb-2"
+              className="input text-gray-800 bg-gray-50 outline outline-gray-200 focus:outline-none focus:border-purple-500 mb-2"
               placeholder="Upload Profile Picture"
             />
 
-            <label className="label text-base font-medium">Email</label>
+            <label className="label text-base text-gray-800 font-medium">Email</label>
             <input
               type="email"
               name="email"
-              className="input focus:outline-none focus:border-purple-500 mb-2"
+              className="input text-gray-800 bg-gray-50 outline outline-gray-200 focus:outline-none focus:border-purple-500 mb-2"
               placeholder="Enter Email"
             />
 
-            <label className="label text-base font-medium">Password</label>
+            <label className="label text-base text-gray-800 font-medium">Password</label>
             <div className="relative">
               <input
                 type={showPass ? "text" : "password"}
                 name="password"
-                className="input focus:outline-none focus:border-purple-500 mb-2"
+                className="input text-gray-800 bg-gray-50 outline outline-gray-200 focus:outline-none focus:border-purple-500 mb-2"
                 placeholder="Password"
                 required
               />
@@ -136,11 +136,11 @@ const Signup = () => {
               <p className="text-red-400 text-base">{errorMessage}</p>
             )}
 
-            <button className="btn border-purple-500  text-purple-500 hover:bg-purple-500 hover:text-white mt-4">
-              Register
+            <button className="btn shadow-none bg-gray-50  border-purple-500  text-purple-500 hover:bg-purple-500 hover:text-white mt-4">
+              Signup
             </button>
 
-            <p className="text-base mt-3">
+            <p className="text-gray-800 text-base mt-3">
               Already have an account ?
               <Link to="/login" className="text-purple-500 underline">
                 Login here
