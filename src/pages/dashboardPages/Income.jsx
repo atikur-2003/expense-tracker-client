@@ -156,7 +156,7 @@ const Income = () => {
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="border border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white px-4 py-2 rounded-lg font-medium cursor-pointer transition duration-300"
+              className="border bg-purple-50 border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white px-4 py-2 rounded-lg font-medium cursor-pointer transition duration-300"
             >
               <span className="text-lg">＋</span> Add Income
             </button>
@@ -254,14 +254,14 @@ const Income = () => {
                         <div className="hidden group-hover:flex gap-4 transition duration-300">
                           <button
                             onClick={() => handleEditClick(income)}
-                            className="text-blue-500 hover:text-blue-700"
+                            className="cursor-pointer text-blue-500 hover:text-blue-700"
                             title="Edit"
                           >
                             <FaEdit />
                           </button>
                           <button
                             onClick={() => handleDeleteIncome(income._id)}
-                            className="text-red-500 hover:text-red-700"
+                            className="cursor-pointer text-red-500 hover:text-red-700"
                             title="Delete"
                           >
                             <FaTrash />

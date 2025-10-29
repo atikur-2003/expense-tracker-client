@@ -173,7 +173,7 @@ const Expense = () => {
           </div>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="border border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white px-4 py-2 rounded-lg font-medium cursor-pointer transition duration-300"
+            className="border bg-purple-50 border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white px-4 py-2 rounded-lg font-medium cursor-pointer transition duration-300"
           >
             + Add Expense
           </button>
@@ -254,21 +254,21 @@ const Expense = () => {
                       <div className="hidden group-hover:flex gap-4 transition duration-300">
                         <button
                           onClick={() => handleEditClick(expense)}
-                          className="text-blue-500 hover:text-blue-700"
+                          className="text-blue-500 cursor-pointer hover:text-blue-700"
                           title="Edit"
                         >
                           <FaEdit />
                         </button>
                         <button
                           onClick={() => handleDeleteIncome(expense._id)}
-                          className="text-red-500 hover:text-red-700"
+                          className="text-red-500 cursor-pointer hover:text-red-700"
                           title="Delete"
                         >
                           <FaTrash />
                         </button>
                       </div>
                       <span className="flex items-center gap-2 px-2 py-0.5 rounded-lg font-medium text-red-600 bg-green-50">
-                        + ${Number(expense.amount || 0).toLocaleString()}{" "}
+                        - ${Number(expense.amount || 0).toLocaleString()}{" "}
                         <FaArrowTrendDown />
                       </span>
                     </div>

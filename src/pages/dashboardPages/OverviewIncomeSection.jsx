@@ -135,7 +135,7 @@ const OverviewIncomeSection = () => {
                       "flex items-center gap-1 px-2 py-1 rounded-lg text-green-600 bg-green-50"
                     }
                   >
-                    ${Number(tx.amount || 0).toLocaleString()}
+                    + ${Number(tx.amount || 0).toLocaleString()}
                     <FaArrowTrendUp />
                   </div>
                 </div>

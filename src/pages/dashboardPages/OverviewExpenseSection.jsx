@@ -85,7 +85,7 @@ const OverviewExpenseSection = () => {
                       "flex items-center gap-1 px-2 py-1 rounded-lg text-red-600 bg-red-50"
                     }
                   >
-                    ${Number(tx.amount || 0).toLocaleString()}
+                   - ${Number(tx.amount || 0).toLocaleString()}
                     <FaArrowTrendDown />
                   </div>
                 </div>

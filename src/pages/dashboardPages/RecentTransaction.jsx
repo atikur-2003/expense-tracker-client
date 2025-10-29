@@ -95,6 +95,12 @@ const RecentTransaction = ({ totals }) => {
                         : "text-red-600 bg-red-50"
                     }`}
                   >
+                    {tx.type === "income" ? (
+                      "+ "
+                    ) : (
+                      '- '
+                    )}
+
                     ${Number(tx.amount || 0).toLocaleString()}
                     {tx.type === "income" ? (
                       <FaArrowTrendUp />
