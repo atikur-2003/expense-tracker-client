@@ -41,10 +41,7 @@ const Income = () => {
     fetchIncomes();
   }, [user?.email, axiosSecure]);
 
-  const handleEditClick = (income) => {
-    setEditingIncome(income);
-    setIsEditModalOpen(true);
-  };
+  
 
   const handleUpdateIncome = async (id, updatedData) => {
     try {
@@ -67,6 +64,15 @@ const Income = () => {
     }
   };
 
+
+  // handle update icon click
+  const handleEditClick = (income) => {
+    setEditingIncome(income);
+    setIsEditModalOpen(true);
+  };
+
+
+  // handle delete function
   const handleDeleteIncome = async (id) => {
     try {
       await axiosSecure.delete(`/incomes/${id}`);

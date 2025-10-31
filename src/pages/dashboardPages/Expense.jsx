@@ -63,6 +63,14 @@ const Expense = () => {
     }
   };
 
+  // edit icon handler
+  const handleEditClick = (expense) => {
+    setEditingExpense(expense);
+    setIsEditModalOpen(true);
+  };
+  
+
+  // handle delete function
   const handleDeleteIncome = async (id) => {
     try {
       await axiosSecure.delete(`/expenses/${id}`);
@@ -126,11 +134,7 @@ const Expense = () => {
     };
 
 
-// edit icon handler
-  const handleEditClick = (expense) => {
-    setEditingExpense(expense);
-    setIsEditModalOpen(true);
-  };
+
 
   // chart data
   const chartData = expenses.map((item) => ({
