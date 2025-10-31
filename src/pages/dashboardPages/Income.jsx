@@ -88,10 +88,12 @@ const Income = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success",
-          });
+        position: "top-end",
+        icon: "success",
+        title: "Income deleted successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
         }
       });
     } catch (error) {

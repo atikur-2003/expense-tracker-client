@@ -41,7 +41,6 @@ const Expense = () => {
     fetchExpenses();
   }, [user?.email, axiosSecure]);
 
-
   // handle update expense
   const handleUpdateExpense = async (id, updatedData) => {
     try {
@@ -68,7 +67,6 @@ const Expense = () => {
     setEditingExpense(expense);
     setIsEditModalOpen(true);
   };
-  
 
   // handle delete function
   const handleDeleteIncome = async (id) => {
@@ -86,9 +84,11 @@ const Expense = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire({
-            title: "Deleted!",
-            text: "Expense has been deleted.",
+            position: "top-end",
             icon: "success",
+            title: "Expense deleted successfully",
+            showConfirmButton: false,
+            timer: 1500,
           });
         }
       });
@@ -97,44 +97,40 @@ const Expense = () => {
     }
   };
 
-
   // down all income as excel sheet handler
-    const downloadExpenseExcel = () => {
-      // ---- a) Prepare clean rows (no React keys, no _id if you don’t want it)
-      const rows = expenses.map((inc) => ({
-        Date: new Date(inc.date).toLocaleDateString("en-GB", {
-          day: "numeric",
-          month: "short",
-          year: "numeric",
-        }),
-        Source: inc.source || "—",
-        Amount: Number(inc.amount) || 0,
-        Description: inc.description || "",
-      }));
-  
-      // ---- b) Create workbook + worksheet
-      const ws = XLSX.utils.json_to_sheet(rows);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Expenses");
-  
-      // ---- c) Auto-size columns (optional but nice)
-      const colWidths = [
-        { wch: 12 }, // Date
-        { wch: 20 }, // Source
-        { wch: 12 }, // Amount
-        { wch: 30 }, // Description
-      ];
-      ws["!cols"] = colWidths;
-  
-      // ---- d) Trigger download
-      const fileName = `Expense_Report_${new Date()
-        .toISOString()
-        .slice(0, 10)}.xlsx`;
-      XLSX.writeFile(wb, fileName);
-    };
+  const downloadExpenseExcel = () => {
+    // ---- a) Prepare clean rows (no React keys, no _id if you don’t want it)
+    const rows = expenses.map((inc) => ({
+      Date: new Date(inc.date).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }),
+      Source: inc.source || "—",
+      Amount: Number(inc.amount) || 0,
+      Description: inc.description || "",
+    }));
 
+    // ---- b) Create workbook + worksheet
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Expenses");
 
+    // ---- c) Auto-size columns (optional but nice)
+    const colWidths = [
+      { wch: 12 }, // Date
+      { wch: 20 }, // Source
+      { wch: 12 }, // Amount
+      { wch: 30 }, // Description
+    ];
+    ws["!cols"] = colWidths;
 
+    // ---- d) Trigger download
+    const fileName = `Expense_Report_${new Date()
+      .toISOString()
+      .slice(0, 10)}.xlsx`;
+    XLSX.writeFile(wb, fileName);
+  };
 
   // chart data
   const chartData = expenses.map((item) => ({
@@ -226,8 +222,13 @@ const Expense = () => {
         ) : (
           <div>
             <div className="mb-5 flex justify-between">
-              <h1 className="text-xl text-gray-800 font-semibold">All Expenses</h1>
-              <button onClick={downloadExpenseExcel} className="flex items-center gap-2 text-sm px-3 py-2 text-purple-500 border border-purple-500 rounded-lg cursor-pointer bg-purple-50 hover:bg-purple-500 hover:text-white transition duration-300">
+              <h1 className="text-xl text-gray-800 font-semibold">
+                All Expenses
+              </h1>
+              <button
+                onClick={downloadExpenseExcel}
+                className="flex items-center gap-2 text-sm px-3 py-2 text-purple-500 border border-purple-500 rounded-lg cursor-pointer bg-purple-50 hover:bg-purple-500 hover:text-white transition duration-300"
+              >
                 <FaArrowDown /> Download
               </button>
             </div>
@@ -291,7 +292,6 @@ const Expense = () => {
           setExpenses={setExpenses}
         />
       )}
-
 
       {/* Edit expense Modal */}
       {isEditModalOpen && (
