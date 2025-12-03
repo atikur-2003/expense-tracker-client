@@ -62,6 +62,8 @@ const Signup = () => {
       });
   };
 
+
+  // Image upload handler
   const handleUploadImage = async (e) => {
     const image = e.target.files[0];
 

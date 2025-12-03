@@ -39,7 +39,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
 
 
   if (loading) {
-    return <Loading/>;
+    return <Loading />;
   }
   return (
     <>
@@ -50,7 +50,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
         onClick={closeSidebar}
       ></div>
       <div
-        className={`fixed top-0 left-0 z-40  shadow-md h-full transform transition-transform duration-300 lg:translate-x-0
+        className={`fixed top-0 left-0 z-40 bg-white shadow-md h-full transform transition-transform duration-300 lg:translate-x-0
         ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         <div className="p-5 border-b border-gray-200">
